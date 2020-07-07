@@ -1,0 +1,10 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{.Values.ingresstls.name}}
+spec:
+  tls:
+  - secretName: {{.Values.ingresssecret.name}}
+  backend:
+    serviceName: {{.Values.tlsservice.name}}
+    servicePort: 80

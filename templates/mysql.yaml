@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    run: wordpress-deployment
+    app: frontend
+  name: {{.Values.mysqlss.name }}
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+      run: wordpress-deployment
+  template:
+    metadata:
+      labels:
+        app: frontend
+        run: wordpress-deployment
+    spec:
+      containers:
+      - image: {{.Values.container.image }}
+        name: {{.Values.container.name }}
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: wordpress
+        - name: WORDPRESS_DB_USER
+          value: user
+        - name: WORDPRESS_DB_NAME
+          value: name
+        - name: WORDPRESS_TABLE_PREFIX
+          value: prefix
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_ROOT_PASSWORD
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: mypv
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mypv
+        persistentVolumeClaim:
+          claimName: mypvc

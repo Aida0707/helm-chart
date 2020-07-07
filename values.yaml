@@ -1,0 +1,31 @@
+#Mysql
+mysqlss:
+  name: mysqlss
+container:
+  image: mysql
+  name: wordpress-deployment
+#Wordpress
+deployment:
+  name: wordpress-deployment
+  
+containers:
+  image: wordpress
+  name: wordpress-deployment  
+#PVC
+pvc:
+  name: mypvc
+#Ingress
+ingress:
+  name: ingress-layer7
+ingressservice:
+  name: nodeport
+#TLS
+ingresstls:
+  name: ingress-tls
+ingresssecret:
+  name: mysql-secret
+tlsservice:
+  name: nodeport
+#Secret
+secret:
+  values: cGFzc3dvcmQ=

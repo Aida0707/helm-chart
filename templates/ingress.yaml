@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{.Values.ingress.name}}
+spec:
+  rules:
+  - host: wp.com
+    http:
+      paths:
+      - backend:
+          serviceName: {{.Values.ingressservice.name}}
+          servicePort: 80
